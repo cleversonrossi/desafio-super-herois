@@ -47,6 +47,12 @@ public class HeroiService {
 		return heroiRepository.findByFlagfavoritoTrue();
 	}
 
+	public void atualizarPropriedadeFlagFavorito(Integer idheroi, Boolean flagfavorito) {
+		Heroi heroiSalvo = buscarHeroiPeloId(idheroi);
+		heroiSalvo.setFlagfavorito(flagfavorito);
+		heroiRepository.save(heroiSalvo);
+	}
+
 	public List<Heroi> findByNomeContains(String nome) {
 		return heroiRepository.findByNomeContains(nome);
 	}

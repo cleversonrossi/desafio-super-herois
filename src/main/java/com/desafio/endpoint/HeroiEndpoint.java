@@ -63,6 +63,12 @@ public class HeroiEndpoint {
 		return heroiService.findByNomeContains(nome);
 	}
 	
+	@PutMapping("/{idheroi}/flagfavorito")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarPropriedadeFlagFavorito(@PathVariable Integer idheroi,@RequestBody Boolean flagfavorito) {
+		heroiService.atualizarPropriedadeFlagFavorito(idheroi, flagfavorito);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Heroi> criar(@Valid @RequestBody Heroi heroi, HttpServletResponse response) {
 		Heroi heroiSalvo = heroiService.save(heroi);
