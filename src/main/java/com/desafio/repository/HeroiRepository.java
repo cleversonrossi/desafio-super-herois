@@ -1,10 +1,15 @@
 package com.desafio.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.desafio.model.Heroi;
-import com.desafio.repository.heroi.HeroiRepositoryQuery;
 
-public interface HeroiRepository extends JpaRepository<Heroi, Integer>, HeroiRepositoryQuery {
+public interface HeroiRepository extends JpaRepository<Heroi, Integer> {
 
+	List<Heroi> findByFlagfavoritoTrue();
+	
+	List<Heroi> findByNomeContains(String nome);
+	
 }

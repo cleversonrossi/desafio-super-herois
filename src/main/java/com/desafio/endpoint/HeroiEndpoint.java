@@ -1,6 +1,9 @@
-package com.desafio.resource;
+package com.desafio.endpoint;
 
-import java.util.List;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List ;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -16,41 +19,53 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.desafio.event.RecursoCriadoEvent;
 import com.desafio.model.Heroi;
-import com.desafio.repository.HeroiRepository;
-import com.desafio.repository.filter.HeroiFilter;
 import com.desafio.service.HeroiService;
 
 @RestController
 @RequestMapping("/herois")
-public class HeroiResource {
-	
-	@Autowired
-	private HeroiRepository heroiRepository;
+public class HeroiEndpoint {
 	
 	@Autowired
 	private HeroiService heroiService;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
-
-	@GetMapping
-	public List<Heroi> listar() {
-		return heroiRepository.findAll();
+	
+	@PostMapping("/upload")
+	public String uploadFoto(@RequestParam MultipartFile anexo) throws IOException {
+		
+		// TODO implementar upload de foto
+		OutputStream out = new FileOutputStream("c:/upload/" + anexo.getOriginalFilename());
+		out.write(anexo.getBytes());
+		out.close();
+		return "OK";
 	}
 
 	@GetMapping
-	public List<Heroi> buscaNome(HeroiFilter heroiFilter) {
-		return heroiRepository.filtrar(heroiFilter);
+	public List<Heroi> listar() {
+		return heroiService.findAll();
+	}
+	
+	@GetMapping("/favoritos")
+	public List<Heroi> buscaFavoritos() {
+		return heroiService.findByFlagfavoritoTrue();
+	}
+	
+	@GetMapping("/buscaNome")
+	public List<Heroi> buscaPorNome(@RequestParam String nome) {
+		return heroiService.findByNomeContains(nome);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Heroi> criar(@Valid @RequestBody Heroi heroi, HttpServletResponse response) {
-		Heroi heroiSalvo = heroiRepository.save(heroi);
+		Heroi heroiSalvo = heroiService.save(heroi);
 		
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, heroiSalvo.getIdheroi()));
 		
@@ -60,7 +75,7 @@ public class HeroiResource {
 	@DeleteMapping("/{idheroi}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Integer idheroi) {
-		heroiRepository.delete(idheroi);
+		heroiService.delete(idheroi);
 	}
 	
 	@PutMapping("/{idheroi}")
@@ -68,11 +83,5 @@ public class HeroiResource {
 		Heroi heroiSalvo = heroiService.atualizar(idheroi, heroi);
 		
 		return ResponseEntity.ok(heroiSalvo);
-	}
-	
-	@PutMapping("/{idheroi}/flagfavorito")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void atualizarPropriedadeFlagFavorito(@PathVariable Integer idheroi,@RequestBody Boolean flagfavorito) {
-		heroiService.atualizarPropriedadeFlagFavorito(idheroi, flagfavorito);
 	}
 }
