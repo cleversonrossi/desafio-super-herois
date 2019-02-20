@@ -42,7 +42,7 @@ public class HeroiEndpoint {
 	public String uploadFoto(@RequestParam MultipartFile anexo) throws IOException {
 		
 		// TODO implementar upload de foto
-		OutputStream out = new FileOutputStream("c:/upload/" + anexo.getOriginalFilename());
+		OutputStream out = new FileOutputStream("../upload/" + anexo.getOriginalFilename());
 		out.write(anexo.getBytes());
 		out.close();
 		return "OK";
