@@ -1,7 +1,7 @@
 <H1>Para executar:</H1>
-*Importar Projeto como maven project
-Rodar o Projeto no tomcat
-Acessar o console do H2:
+* Importar Projeto como maven project
+* Rodar o Projeto no tomcat
+* Acessar o console do H2:
 http://localhost:8080/spring/console
 JDBC URL: jdbc:h2:~/h2db/spring_db
 User Name: sa
