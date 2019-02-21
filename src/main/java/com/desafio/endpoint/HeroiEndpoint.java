@@ -37,16 +37,6 @@ public class HeroiEndpoint {
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
-	
-	@PostMapping("/upload")
-	public String uploadFoto(@RequestParam MultipartFile anexo) throws IOException {
-		
-		// TODO implementar upload de foto
-		OutputStream out = new FileOutputStream("../upload/" + anexo.getOriginalFilename());
-		out.write(anexo.getBytes());
-		out.close();
-		return "OK";
-	}
 
 	@GetMapping
 	public List<Heroi> listar() {
