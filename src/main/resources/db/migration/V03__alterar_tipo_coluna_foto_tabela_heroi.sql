@@ -1,0 +1,1 @@
+alter table heroi change foto foto mediumtext;
