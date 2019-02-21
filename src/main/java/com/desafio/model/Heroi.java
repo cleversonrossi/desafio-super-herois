@@ -17,7 +17,6 @@ public class Heroi {
 	private Integer idheroi;
 	
 	@NotNull
-	@Size(min = 3, max = 80)
 	private String nome;
 	
 	private String foto;
