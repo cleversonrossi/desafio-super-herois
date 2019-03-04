@@ -1,16 +1,19 @@
-<H1>Para executar:</H1>
-*Importar Projeto como maven project
-Rodar o Projeto no tomcat
-Acessar o console do H2:
-http://localhost:8080/spring/console
-JDBC URL: jdbc:h2:~/h2db/spring_db
-User Name: sa
-Password:
-Rodar script de insert inicial que está em:
-src/main/resources/script.sql
-Acessar projeto em
-http://localhost:8080/spring
-configurações do banco de dados em:
-src/main/resources/application.properties
-configurações de envio de email em:
-src/main/resources/email.properties
+### Teclonogias Usadas:
+* Java 1.8.0_201
+* Spring Boot 2.1.3
+* Banco MySQL 8.0.15
+* Flywa 3.2.1
+* Apache Maven 3.3.3
+
+
+### Para executar:
+* Importar Projeto como maven project
+
+* configurações do banco de dados em:
+  - src/main/resources/application.properties
+
+* Executar o projeto:
+  - Abrir a classe DesafioSuperHeroisApplication e executa-la
+
+* Acessar projeto em:
+  - http://localhost:8080
